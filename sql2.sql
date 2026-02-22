@@ -1,0 +1,113 @@
+--???????????????????????--
+
+
+--NOw we are heading toward exploring new topics--
+
+--Join :-> combine two table using a single column.
+
+create table student(
+Id serial primary key ,
+name varchar(12) NOT null ,
+age int Not NULL,
+marks float ,
+dept_id int NOT NULL
+);
+
+
+INSERT INTO student(name, age, marks, dept_id)
+VALUES
+('Ritik',21,9.1,1),
+('Shalu',24,8.2,1),
+('Rupesh',20,7.5,2),
+('Choti',22,6.8,3),
+('Reyansh',19,8.9,1),
+('Aman',20,7.2,2),
+('Priya',23,9.4,1),
+('Neha',21,6.7,3),
+('Karan',22,8.6,2),
+('Pooja',20,7.8,1),
+('Rahul',24,9.0,2),
+('Ankit',19,5.9,3),
+('Sneha',22,8.1,1),
+('Vikas',25,7.4,2),
+('Meena',21,6.3,3),
+('Suresh',26,8.7,1),
+('Deepak',23,7.6,2),
+('Komal',20,9.2,3),
+('Arjun',22,8.3,1),
+('Nisha',21,7.1,2),
+('Rohan',24,6.5,3),
+('Simran',20,8.4,1),
+('Tarun',23,7.9,2),
+('Kavya',19,9.5,3),
+('Ansh',18,6.2,1),
+('Ayush',21,8.8,2),
+('Muskan',22,7.3,3),
+('Varun',23,9.6,1),
+('Payal',20,6.9,2),
+('Gunjan',24,8.0,3);
+
+select * from student;
+select * from student where dept_id=1;
+select * from student where dept_id=2;
+select * from student where dept_id=3;
+
+select dept_id , count(*)
+from student group by dept_id;
+
+
+CREATE TABLE dept (
+dept_id INT PRIMARY KEY,
+dept_name VARCHAR(12),
+mentor VARCHAR(12)
+);
+
+INSERT INTO dept(dept_id , dept_name , mentor)
+VALUES
+(1, 'CSE', 'Sharma'),
+(2, 'ECE', 'Verma'),
+(3, 'ME', 'Singh');
+
+select * from dept;
+
+
+-- inner join : only return same matching values from both tables.
+
+select  * from 
+student as s 
+inner join dept as d 
+on  s.dept_id = d.dept_id;  
+
+select s.name , s.marks , d.mentor ,d.dept_name from 
+student as s 
+inner join dept as d
+on s.dept_id = d.dept_id;
+
+
+--left join : it return all the values of left table and common values from second table.
+
+select s.name , d.dept_id 
+from  student as s 
+left join dept as d
+on d.dept_id=s.dept_id;
+
+
+-- right join : it return all the values of right and common from left. 
+
+select s.name , d.dept_id , s.marks , d.mentor
+from  student as s 
+right join dept as d
+on d.dept_id=s.dept_id;
+
+-- full join : return rverything from both tables  
+
+SELECT student.name,dept.dept_name
+
+FROM student
+
+FULL JOIN dept
+
+ON student.dept_id = dept.dept_id; 
+
+-- it return everything from both the table 
+-- bye bye join end in next foreign key , transactions , indexing , and query optimization 
