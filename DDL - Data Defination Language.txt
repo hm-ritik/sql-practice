@@ -1,0 +1,55 @@
+--DDL :- Data Defination Language 
+--it is use to define and modify structure of table 
+
+--CREATE: use to create database or table
+
+create table product(
+    shop_id int primary key,
+    product_name varchar(20),
+    shop_name varchar(25),
+    price float NOT null,
+    taxno int unique
+);
+insert into  product
+values(34,'shirt','vishalvivek',430.0,345678),
+(45,'pant','hiraram',1234, 123456),
+(103,'suit','indiamall',5698 , 787878),
+(22 , 'baggy pant' , 'sarojini12',249,789789),
+(89 , 'oversize tshirt', '22market',345,543454);      --CREATE completed 
+
+
+
+--ALTER : it is use to add , modify or drop columns in table
+
+alter table product add gstno float;             --1
+
+insert into  product
+values(39,'shirt','vishalvivek',430.0,34569078,1000003450),
+(88,'80hazzarke shoes' , 'MCStan', 80000 , 45243543,103456765);
+select * from product;
+
+alter table product drop column taxno;     --2
+select * from product;
+
+alter TABLE product
+alter COLUMN price type INT;
+
+--Truncate : it is use to delete entire data and keep only table structure 
+truncate table product;
+select * from product;
+
+--RENAME : it is use to change the name table . in postgresql you cannot use rename directly. use it with ALTER
+ALTER table product rename to products;
+alter table products rename gstno to GSTNUMBER;
+insert into  products
+values(34,'shirt','vishalvivek',430.0,345678),
+(45,'pant','hiraram',1234, 123456),
+(103,'suit','indiamall',5698 , 787878),
+(22 , 'baggy pant' , 'sarojini12',249,789789),
+(89 , 'oversize tshirt', '22market',345,543454); 
+
+select * from products;
+
+--DROP : it is use to delete the entire table structure + data
+drop table products;
+select * from products;  -- this will not work
