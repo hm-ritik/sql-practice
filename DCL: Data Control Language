@@ -1,0 +1,107 @@
+--DCL : Data Control Language , it is use to give and permission to the user.
+--There are usually two commands 
+--Grant it is use to give permission , Revoke: use to  remove permission 
+
+---- Industries works usually with RBA system
+--RBA: Role Based Access :-giving permission based on Role 
+--make  roles then assign permission to the role 
+--then create user and give them role which we made . 
+
+--DCL commands are more for 
+--Data security
+--Role based permission
+
+
+--Making a DATABSE FOR BANKING SYSTEM END TO END TO UNDERSTAND DCL COMMANDS 
+--BANKING SYSTEM DATABASE : MANAGER,EMPLOYEE , CUSTOMER 
+
+create table customers(
+    customer_id int primary key , 
+    name varchar(15),
+    balance float
+);
+
+create table employee(
+    emp_id int primary key ,
+    em_name varchar(20),
+    dept varchar(19)
+);
+create table transactions(
+    tran_id int primary key  , 
+    customer_id int , 
+    amount float , 
+    foreign key (customer_id) 
+    references customers  (customer_id)
+    
+);
+
+insert into customers(customer_id, name , balance)
+values(1 , 'puneeta' , 4534568 ),
+(2 , 'kush' , 9876544),
+(3 , 'nitin' , 4583284),
+(4 , 'satyam' , 654321),
+(5 , 'sehaj saini' , 907000),
+(6 , 'anish' , 543324),
+(7 , 'nikhil' , 456098 );
+
+
+insert into employee(emp_id , em_name , dept)
+values(231 , 'Puneet ' , 'cse'),
+(123 , 'premlata chopra' , 'ec' ),
+(675 , 'Arpita' , 'osa'),
+(232 , 'Amrita singh' , 'ops'),
+(760 , 'Ankur Srivastav' , 'dsa');
+
+INSERT INTO transactions(tran_id , customer_id,amount)
+VALUES
+(1001, 1, 5000),
+(1002, 2, 7000),
+(1003, 1, 2000),
+(3421 , 4 , 10000);
+
+
+
+--Basic things are done above now it's time for creating role assigning permission then making user and assigning tham role
+
+create role customer_role;
+create role employee_role;
+create role manager_role;
+--created roles now grant permission 
+
+grant select on customers to customer_role;
+
+grant select on employee to employee_role;
+grant select , update on customers to employee_role;
+grant select , update , insert on transactions to employee_role; 
+
+
+grant all PRIVILEGES on customers to manager_role;
+grant all PRIVILEGES on employee to manager_role;
+grant all PRIVILEGES on transactions to manager_role;
+
+--granted permissions based on roles now 
+--all the customers has seprate access using customer_role 
+--all the employee has seprate access using employee_role 
+-- same for manager role also
+
+--we can also revoke permission . ex . 
+
+revoke all PRIVILEGES on transactions from manager_role;
+
+
+--Now create user and assign them their role. 
+
+create user cus1
+with password 'cus43';
+
+create user emp1 
+with password 'em87';
+
+create user manager1
+with password '34erxcf';
+
+-- Now assign roles to the user 
+
+grant customer_role to cus1;
+grant manager_role to manager1;
+grant employee_role to emp1;
