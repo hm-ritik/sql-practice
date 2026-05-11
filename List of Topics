@@ -1,0 +1,27 @@
+Database Management System ....................................................
+ER Model
+Relational Model
+DBMS Architecture
+Data Independence
+Keys (Super, Candidate, Primary, Foreign)....
+Normalization (1NF, 2NF, 3NF, BCNF)
+Functional Dependency
+Relational Algebra
+Relational Calculus
+SQL (DDL, DML, DCL, TCL)
+Joins (Inner, Outer, Self, Cross)
+Subqueries
+Views
+Indexes (B+ Tree, Hash)
+Transactions
+ACID Properties
+Concurrency Control
+Locking Protocols
+Deadlock
+Serializability
+Recovery Techniques
+Log-Based Recovery
+Database Storage (File Organization, Paging)
+Buffer Management
+Query Processing
+Query Optimization
