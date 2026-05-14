@@ -1,0 +1,86 @@
+--TCL :- Transaction Control Language , These commands manage transactions in database
+--Transactions are the group of operations treated as one unit ;
+--Begin , commit , rollback , savepoint are main TCL commands . 
+
+--Transactions are set of operations treated as single unit of work 
+
+
+
+create table Accounts(
+    id int primary key , 
+    name varchar(20),
+    Balance int
+);
+
+insert into Accounts(id , name , Balance)
+values(1 , 'Ravi' , 34000),
+(2 , 'Ritik' , 45000),
+(3 , 'Ritika' , 54321),
+(4 , 'Ranjan' , 78990),
+(6 , 'Chandan' , 445324);
+
+
+select * from Accounts;
+
+--TCL commands in action 
+
+
+
+begin;                                      --Begin : use to start transaction       
+update Accounts set Balance=Balance-600
+where id=3;
+
+update Accounts set Balance=Balance+600
+where id=2;
+
+commit;                       --Commit : use to save changes permanently                             --
+
+select * from Accounts where id=2;
+
+
+BEGIN;
+
+update Accounts
+SET balance = balance - 600
+where id = 3;
+rollback;                   --Here rollback will not work because changes are alredy commited.                         
+
+select * from Accounts;
+
+
+
+begin;                                    --- here this operation is initiated 
+
+update Accounts set balance=balance-34500
+where name='Ranjan';
+
+select* from Accounts; -- money deducted from the user's account but not commit, we can rollback transaction.
+
+rollback;
+ 
+select * from Accounts; 
+
+
+--Savepoint is to save temporary 
+
+begin;   -- start the process 
+
+update Accounts
+set balance = balance - 2000
+where id = 1;        --make the transaction money deducted
+
+savepoint after_deduction;      -- we temporary save the operation so , when we rollback
+                                -- these changes are kept not unsaved due to rollback
+update Accounts
+set balance = balance + 2000
+where id = 2;
+
+rollback to after_deduction;   -- here when we rollback we get back to saepoint to begin. 
+
+commit;   --  When we commit transactions are saved permanently  
+
+
+--TCL ensure ACID properties which ensure reliablity and consistency in database
+--EXplore ACID properties and study and undestand the concept.
+
+--RITIK thanks for reading LOVE 10000000000000000000000000000000000000000000000 times
