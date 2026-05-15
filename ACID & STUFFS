@@ -1,0 +1,78 @@
+Hi , I studied ACID properties in very deep how it supports Transactions and how various problems occur 
+While exploring Acid i get confused a lot in Isolation , because isolation do not effect real world operations 
+in some cases , still we sees it as a problem . 
+LIKE EXAMPLE : there is only one flight ticket is left 
+T1 reads the data ticket=1;
+T2 reads the data and write it (booked it) commit it.
+When T1 again reads data it sees ticket=0. 
+so T1 cannot book ticket now because no ticket is available and there is nothing wrong in real worls scenario here. 
+but it is not following ISOLATION (NON REPETABLE READ). 
+
+There is a thing called Concurrench Control : it is making multiple transactions running concurrently by 
+following ACID proerties 
+Without Concurrency Control :
+1-> Lost Update 
+2-> Dirty Read 
+3-> Inconsistent Data 
+4-> race condition 
+There are Various Technique of Concurrency Control 
+1->Locks
+2->Serializability 
+3->MVCC -Multiversion Concurrency Control 
+In modern databases like PostgreSQL and MYSQL MVCC is used highly for Maintaing high concurrency 
+
+Go and explore all the topics which is mentioned here , you will definately  love that how things are working 
+In the end i Am Adding a SQL query Of Working OF MVCC in postgresql 
+
+create table accounts(
+     id int primary key,
+     name varchar(20),
+     balance int
+);
+
+insert into accounts(id , name , balance)
+values(1,'rohit' , 45600),
+(2,'ritika' , 4321),
+(3, 'Love' , 7898),
+(4,'Nitin' , 4365);
+
+begin;
+select balance from accounts where id = 1; 
+
+begin;
+update accounts set balance = 900 where id = 1; 
+commit; 
+
+select balance from accounts where id = 1; 
+commit;
+
+
+
+Output:
+
+127 ms
+CREATE TABLE
+INSERT 0 4
+BEGIN
+ balance 
+---------
+   45600
+(1 row)
+
+BEGIN
+UPDATE 1
+COMMIT
+ balance 
+---------
+     900
+(1 row)
+
+COMMIT
+
+psql:commands.sql:17: WARNING:  there is already a transaction in progress
+psql:commands.sql:25: WARNING:  there is no transaction in progress
+
+
+
+Very Interesting Go and study all these topics you will love it . 
+Bye - Author Ritik Raushan (6th Sem Cse 2330185 section-B)
