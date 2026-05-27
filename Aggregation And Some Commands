@@ -125,7 +125,7 @@ from student group by age;
 select age , min (marks)
 from student group by age;
 
---having
+--having : Having is used after group by to filter groups. 
 select age , count(*)
 from student group by age
 having count(*)>2;
@@ -141,6 +141,7 @@ having avg(marks)>4;
 
 --where is used before grouping 
 --having is used after grouping
+--EXEXUTION ORDER OF THESE COMMAND : FROM -> WHERE -> HAVING 
 
 
 --Thanks keep learning , there will be 2 more partition
