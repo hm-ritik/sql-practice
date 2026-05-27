@@ -2,7 +2,7 @@
 
 
 --NOw we are heading toward exploring new topics--
-
+-- Joins work intenally based on Cartesian Product and some specific condition 
 --Join :-> combine two table using a single column.
 
 create table student(
