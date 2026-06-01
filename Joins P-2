@@ -1,0 +1,80 @@
+--Joins Part-2 Advance Joins. Self , Cross , natural
+
+create table employees(
+    emp_id int primary key , 
+    emp_name varchar(20),
+    manager_id int
+);
+
+insert into employees(emp_id , emp_name , manager_id)
+values(1 , 'Ritik' , NULL),
+(2 , 'Rohit' , 1),
+(3 , 'Ritika' , 1),
+(4 , 'Ravi' , 2);
+
+--The table above seems complex because Ritik is the manager of Rohit & Ritika 
+--Rohit is manager of Ravi and this relation is in the same table . 
+--Go and Study About this Table . 
+
+--Self Join : it determines relation in the table itself 
+select e.emp_name as Employee ,
+m.emp_name as Manager
+from employees as e 
+left join employees as m 
+on e.manager_id=m.emp_id;   -- Run this query to understand self join concepts and study the above table.
+
+
+
+--Cross Join : Cross join is for showing all the combination basically cartesian product of two table
+
+
+create table color(
+   id int primary key ,
+   name varchar(20)
+);
+
+create table size(
+    id int primary key , 
+    name varchar(2)
+);
+
+insert into color(id , name)
+values(1,'red'),
+(2,'blue'),
+(3,'green'),
+(4,'brown');
+
+insert into size(id , name)
+values(1,'M'),
+(2,'S'),
+(3,'L'),
+(4,'XL');
+
+select * from color cross join size;   -- it return every combinatin row(A)*row(B).
+
+--Natural Join : It automatically Find the same name in both the table and join them
+create table student(
+  s_id int primary key,
+  name varchar(20)
+);
+
+create table enrollment(
+   s_id int primary key ,
+   course varchar(20)
+);
+
+insert into student(s_id , name)
+values(1 ,'Ritik'),
+(2 ,'Ritesh'),
+(3 , 'Sandesh');
+
+insert into enrollment(s_id , course)
+values (1 , 'Dbms'),
+(2 , 'OOP'),
+(3 , 'maths'),
+(4 , 'History');
+
+select * from student natural join enrollment; 
+
+
+--That's it we will comeback with another Topic !
