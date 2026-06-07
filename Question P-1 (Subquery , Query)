@@ -1,0 +1,91 @@
+-- Create Employee Table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department VARCHAR(30),
+    salary DECIMAL(10,2),
+    city VARCHAR(30)
+);
+
+-- Insert Values
+INSERT INTO Employee (emp_id, emp_name, department, salary, city)
+VALUES
+(101, 'Ritik', 'IT', 50000.00, 'Patna'),
+(102, 'Aman', 'HR', 40000.00, 'Delhi'),
+(103, 'Priya', 'Finance', 55000.00, 'Mumbai'),
+(104, 'Rahul', 'IT', 60000.00, 'Bangalore'),
+(105, 'Neha', 'Marketing', 45000.00, 'Chandigarh'),
+(106, 'Mohit', 'IT', 60000.00, 'Pune'),
+(107, 'Anjali', 'HR', 48000.00, 'Jaipur'),
+(108, 'Karan', 'Finance', 55000.00, 'Lucknow'),
+(109, 'Sneha', 'Marketing', 52000.00, 'Delhi'),
+(110, 'Vikas', 'IT', 70000.00, 'Hyderabad'),
+(111, 'Pooja', 'Finance', 62000.00, 'Mumbai'),
+(112, 'Rohit', 'HR', 40000.00, 'Patna'),
+(113, 'Simran', 'Marketing', 47000.00, 'Chandigarh'),
+(114, 'Arjun', 'IT', 75000.00, 'Bangalore'),
+(115, 'Kavya', 'Finance', 68000.00, 'Pune');
+
+
+
+--Find Second Highest salary
+select max(salary) from Employee where salary<(
+  select max(salary) from Employee
+);
+select * FROM Employee order by salary desc limit 1 offset 1;  -- i found this one the most optimal 
+--There is a edge case here what if to person has highest salary we get wrong answers so , 
+select distinct salary    -- distinct removes duplicate rows from result
+from Employee;
+
+select distinct salary from Employee order by salary desc limit 1 offset 1;
+
+
+
+--Find the name of Employee taking second highest salary
+select emp_name from Employee where salary=(
+  select max(salary) from Employee where salary<(
+    select max(salary) from Employee
+  )
+);
+select * from Employee where salary=(
+  select distinct salary from Employee order by salary desc limit 1 offset 1
+);
+
+--Find the name of employee taking highest salary
+
+select emp_name from Employee where salary=(
+  select max(salary) from Employee
+);
+
+--Display dept name along with numbers of employess working there 
+select department, count(*) from Employee group by department; --In previous we also studied 
+                                                               --that group by is used for grouping same
+                                                               --rows that have same Values in specific column
+
+                                                               
+--Display the dep name where no of employess are less than 4. 
+
+select department , count(*) from Employee group by department having count(*)<4;   
+
+--display the name of employess working in department count less than 4 
+
+select emp_name from Employee where department in( -- why in not =?
+  select department from Employee group by department having count(*)<4 
+);
+
+
+-- display the name of employee who is taking highest salary in department=Hr
+select max(salary) from Employee where department='HR';  -- simple for practice 
+
+
+-- display the name of employee taking highest salary in each department
+select emp_name , salary , department from Employee where salary  in(
+select  max(salary)  from Employee group by department );
+
+--display the name of employee from Delhi , Mumbai , Chandigarh
+
+select emp_name , city  from Employee where city in ('Delhi','Mumbai','Chandigarh');
+
+--Thanks for visiting.
+-- run on compiler to understand the qurey  
+--Ritik bye.
