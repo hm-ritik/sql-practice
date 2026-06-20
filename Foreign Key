@@ -1,0 +1,105 @@
+--foreign key  
+
+
+create table dept(
+ dept_id int primary key , 
+ dept_name varchar (12),
+ mentor varchar(20)
+);
+
+insert into dept(dept_id , dept_name , mentor)
+values
+(1 , 'cse' , 'rubeljeet'),
+(2 , 'ece' , 'bhupinder kaur'),
+(3 , 'mec' , 'Evswala'),
+(4 , 'wrksp' , 'manindar');
+
+select * from dept;
+
+select mentor from dept;
+select dept_name from dept;
+
+
+
+create table student (
+ id serial primary key ,
+ name varchar(12),
+ marks float ,
+ dept_id int ,
+ foreign key(dept_id)       --________
+ references dept(dept_id) --__________/ using foreign key 
+ );
+ 
+ -- here is the importent point whenver we insert values in student table 
+ -- foreign key set a limit on dept_id range , if user cross the range 
+ -- while inserting values in table student will get error. 
+ 
+ --_____________--
+ -- so let's start--
+ --_____________--
+ 
+ insert into student(name , marks , dept_id)
+ values
+ ('ritik' , 9.1 , 1),--_____________
+ ('rohit' , 7.0 , 1 ),--            |
+ ('sahej' , 7.4, 1),--              |
+ ('puneeta' , 9.8 , 1),
+ ('nitin' , 8.0 , 1),--             |
+ ('ashuosh' , 8.0 , 2), --          |   these all inputs will work accurately 
+ ('ranjit' , 6.7 , 2),--            |
+ ('gautam' , 8.7 , 2),--            |
+ ('kush' , 7.8 , 3),--              |
+ ('vishal' , 8.1 , 4),--            |
+ ('sweta' , 8.7 , 4);--             |
+
+--but not this one  
+insert into student(name , marks , dept_id)
+ values
+ ('cya' , 8.7 , 7);  -- this will not work because it is not in range of dept_id
+
+ select * from student;
+ --we get a error as a answer 
+ -- psql:commands.sql:58: ERROR:  insert or update on table "student" violates foreign key constraint "student_dept_id_fkey"
+--DETAIL:  Key (dept_id)=(34) is not present in table "dept".
+
+
+
+--Now Indexing--
+--Indexing allows us to search very fast in the database , i eliminate sequential search
+--and search the row in O(log n) time 
+
+create table employee(
+   em_id serial primary key , 
+   salary Integer ,
+   Name varchar(12) not null
+);
+
+INSERT INTO employee (salary, name) VALUES
+(30000, 'Ritik'),
+(45000, 'Aman'),
+(38000, 'Karan'),
+(52000, 'Riya'),
+(41000, 'Neha'),
+(60000, 'Arjun'),
+(47000, 'Sonal'),
+(35000, 'Rahul'),
+(72000, 'Priya'),
+(39000, 'Ankit'),
+(55000, 'Pooja'),
+(48000, 'Vikas'),
+(62000, 'Sneha'),
+(43000, 'Rohit'),
+(51000, 'Kriti'),
+(68000, 'Deepak'),
+(37000, 'Nisha'),
+(75000, 'Aditi'),
+(46000, 'Varun'),
+(58000, 'Megha');
+
+
+select salary from employee where Name='Megha'; -- this will check one by one O(n)
+
+--Make a index 
+
+create index em_name on employee(name);
+select salary from employee where Name='Megha';
